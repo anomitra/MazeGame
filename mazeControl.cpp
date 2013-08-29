@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <conio.h>
 
 /* UNDECLARED FUNCTIONS, TO BE WRITTEN */
 
@@ -9,7 +10,7 @@ void getHighScore();
 void gameOver();
 
 int maze[25][40];
-int x=1;
+int x=2;
 int y=0; // STARTING POSITION, CHANGE LATER
 void getMaze(FILE* fp)
 {
@@ -79,12 +80,11 @@ void display()
     }
 }
 
-bool checkBounds(int x,int y)
+bool checkBounds(int k,int l)
 {
-    if(x>9||y>9)
-        gameOver();
-
-    if(maze[x][y]=='\u00b2')
+    /*if(maze[k][l]=='\u00b2')
+        gameOver();*/
+    if(maze[k][l]!=' ')
         gameOver();
 }
 
@@ -98,13 +98,14 @@ int main()
 {
     FILE* fp=fopen("maze1.txt","r");
     getMaze(fp);
-    printf("---%*s%*s---\n",25,"BEHOLD THE MAZE!",9,"");
+    //printf("---%*s%*s---\n",25,"BEHOLD THE MAZE!",9,"");
     printf("\n\n");
     display();
     while(1)
     {
         int ch;
-        scanf("%c",ch);
+        //scanf("%c",ch);
+        ch=getch();
         moveToken(ch);
         system("cls");
         display();
