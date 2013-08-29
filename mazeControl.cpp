@@ -33,19 +33,19 @@ void moveToken(char dir)
     {
         case 'w':
             x--;
-            //checkBounds(x,y);
+            checkBounds(x,y);
             break;
         case 's':
             x++;
-            //checkBounds(x,y);
+            checkBounds(x,y);
             break;
         case 'a':
             y--;
-            //checkBounds(x,y);
+            checkBounds(x,y);
             break;
         case 'd':
             y++;
-            //checkBounds(x,y);
+            checkBounds(x,y);
             break;
         default:
             break;
@@ -72,6 +72,20 @@ void display()
         }
         printf("\n");
     }
+}
+
+bool checkBounds(int x,int y)
+{
+    if(x>9||y>9)
+        gameOver();
+
+    if(maze[x][y]=='\u00b2')
+        gameOver();
+}
+
+void gameOver()
+{
+    printf("You have hit the wall!\a\a\a")
 }
 
 int main()
