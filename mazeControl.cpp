@@ -6,6 +6,7 @@
 bool checkBounds(int x,int y);
 void setHighScore(char name[], double time);
 void getHighScore();
+void gameOver();
 
 int maze[25][40];
 int x=1;
@@ -29,6 +30,7 @@ void getMaze(FILE* fp)
 
 void moveToken(char dir)
 {
+    maze[x][y]=' ';
     switch(dir)
     {
         case 'w':
@@ -50,10 +52,13 @@ void moveToken(char dir)
         default:
             break;
     }
+    maze[x][y]='*';
 }
 
 void display()
 {
+    printf("---%*s%*s---\n",25,"BEHOLD THE MAZE!",9,"");
+    printf("\n\n");
     int i,j;
     for(i=0;i<23;i++)
     {
@@ -85,13 +90,24 @@ bool checkBounds(int x,int y)
 
 void gameOver()
 {
-    printf("You have hit the wall!\a\a\a")
+    printf("You have hit the wall!\a\a\a");
+    exit(0);
 }
 
 int main()
 {
     FILE* fp=fopen("maze1.txt","r");
     getMaze(fp);
+    printf("---%*s%*s---\n",25,"BEHOLD THE MAZE!",9,"");
+    printf("\n\n");
     display();
+    while(1)
+    {
+        int ch;
+        scanf("%c",ch);
+        moveToken(ch);
+        system("cls");
+        display();
+    }
     return 0;
 }
