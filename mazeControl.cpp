@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <conio.h>
+#include <time.h>
 
 /* UNDECLARED FUNCTIONS, TO BE WRITTEN */
 
@@ -10,12 +11,15 @@ void getHighScore();
 void gameOver();
 
 int maze[25][40];
-int x=2;
-int y=0; // STARTING POSITION, CHANGE LATER
+int x,y;
+clock_t t;
 void getMaze(FILE* fp)
 {
     int i=0,j=0;
     char ch;
+    fscanf(fp,"%c %d %d",&ch,&x,&y);
+    printf("%d %d",x,y);
+    getch();
     while(feof(fp)==0)
     {
         ch=fgetc(fp);
@@ -86,6 +90,13 @@ bool checkBounds(int k,int l)
         gameOver();*/
     if(maze[k][l]!=' ')
         gameOver();
+    if(maze[k][l]=='p')
+    {
+        printf("You have won the game!");
+        t=clock()-t;
+        printf("Time taken is: %f", (float) (t/CLOCKS_PER_SEC));
+        exit(0);
+    }
 }
 
 void gameOver()
@@ -101,10 +112,16 @@ int main()
     //printf("---%*s%*s---\n",25,"BEHOLD THE MAZE!",9,"");
     printf("\n\n");
     display();
+    int f=0;
     while(1)
     {
         int ch;
         //scanf("%c",ch);
+        if(f==0)
+        {
+            t=clock();
+            f--;
+        }
         ch=getch();
         moveToken(ch);
         system("cls");
