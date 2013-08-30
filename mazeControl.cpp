@@ -3,15 +3,13 @@
 #include <conio.h>
 #include <time.h>
 
-/* UNDECLARED FUNCTIONS, TO BE WRITTEN */
-
 bool checkBounds(int x,int y);
 void setHighScore(char name[], double time);
 void getHighScore();
 void gameOver();
 
 int maze[25][40];
-int x,y;
+int x=2,y,x_end,y_end;
 clock_t t;
 void getMaze(FILE* fp)
 {
@@ -27,6 +25,18 @@ void getMaze(FILE* fp)
         {
             i++;
             j=0;
+        }
+        else if(ch=='*')
+        {
+            x=i;
+            y=j;
+            maze[i][j++]=ch;
+        }
+        else if(ch=='p')
+        {
+            x_end=i;
+            y_end=j;
+            maze[i][j++]=ch;
         }
         else
             maze[i][j++]=ch;
@@ -88,20 +98,25 @@ bool checkBounds(int k,int l)
 {
     /*if(maze[k][l]=='\u00b2')
         gameOver();*/
-    if(maze[k][l]!=' ')
-        gameOver();
     if(maze[k][l]=='p')
     {
-        printf("You have won the game!");
+        printf("You have won the game!\n");
         t=clock()-t;
-        printf("Time taken is: %f", (float) (t/CLOCKS_PER_SEC));
+        float tim=((float)t/CLOCKS_PER_SEC);
+        printf("Time taken is: %.2f",tim);
+        getch();
         exit(0);
     }
+    if(maze[k][l]!=' ')
+        gameOver();
 }
 
 void gameOver()
 {
     printf("You have hit the wall!\a\a\a");
+    t=clock()-t;
+    float tim=((float)t/CLOCKS_PER_SEC);
+    printf("Time taken is: %.2f",tim);
     exit(0);
 }
 
@@ -117,13 +132,13 @@ int main()
     {
         int ch;
         //scanf("%c",ch);
+        ch=getch();
+        moveToken(ch);
         if(f==0)
         {
             t=clock();
             f--;
         }
-        ch=getch();
-        moveToken(ch);
         system("cls");
         display();
     }
